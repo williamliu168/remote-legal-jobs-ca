@@ -14,7 +14,7 @@ import re
 import sqlite3
 from datetime import datetime, timezone
 
-USER_AGENT = "jobfinder/0.1 (+https://github.com/williamliu168/remote-legal-jobs-ca; personal job search)"
+USER_AGENT = "jobfinder/0.1 (+https://github.com/williamliu168/remote-ca-jobfinder; personal job search)"
 
 
 def strip_html(s: str) -> str:

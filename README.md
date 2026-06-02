@@ -1,9 +1,9 @@
-# remote-legal-jobs-ca
+# remote-ca-jobfinder
 
-A tiny, **profile-driven**, rule-based job aggregator. As shipped it surfaces
-**remote, Canada-eligible legal & law-adjacent roles** from four free public job
-APIs — but *what* it looks for lives in a single config file, so the same engine
-can be pointed at any role family or company list.
+A tiny, **profile-driven**, rule-based job aggregator. *What* it looks for lives
+in a single config file, so the same engine can be pointed at **any role/field**
+or company list. As shipped it surfaces **remote, Canada-eligible legal &
+law-adjacent roles** from four free public job APIs.
 
 It pulls postings, tags each by location and role, and puts the roles you care
 about on top — while keeping everything else browsable. No LLM, no API keys, no
