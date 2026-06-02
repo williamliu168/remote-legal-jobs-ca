@@ -1,0 +1,60 @@
+# =============================================================================
+# profile.yaml — the SEARCH PROFILE (business logic).
+#
+# This file is "what to look for". The jobfinder package itself is generic
+# infrastructure (scraping, classification mechanics, report, web). To repurpose
+# the tool for a different person / role / location, swap THIS file plus
+# companies.yaml — no code changes.
+#
+#   name      : identifier for the profile
+#   label     : heading for the surfaced section / default web view
+#   location  : which location lens to apply (only 'canada' is implemented)
+#   match     : how titles are matched (scope/word_boundary/case_sensitive)
+#   families  : ordered list of role classes to SURFACE. The first family whose
+#               regex matches a job title wins and becomes that job's role_tag.
+#               A job that matches no family gets tag 'other' (kept, not surfaced).
+#
+# Each family:
+#   tag       : the role_tag stored on the job
+#   keywords  : plain words, matched whole-word (\bword\b) per `match`
+#   patterns  : raw regex for nuanced cases (full precision)
+#   exclude   : optional regex that, if it matches the title, vetoes this family
+# =============================================================================
+name: legal-ca
+label: "Legal & law-adjacent"
+location: canada
+match:
+  scope: title
+  word_boundary: true
+  case_sensitive: false
+
+families:
+  - tag: legal              # core legal practice
+    keywords: [counsel, attorney, lawyer, solicitor, barrister,
+               litigation, litigator, paralegal, "law clerk"]
+    patterns:
+      - '(general|in-?house|associate|senior|staff|corporate|commercial|deputy|assistant|managing|chief|division|group|regional|product|privacy|employment|litigation|securities|tax|ip|patent)\s+counsel'
+      - '\bGC\b'
+      - '\bAGC\b'
+      - 'chief\s+legal\s+officer'
+      - '\bCLO\b'
+      - 'legal\s+(assistant|secretary|clerk|manager|director|lead|specialist|analyst|advisor|adviser|associate|counsel)'
+      - '(director\s+of|head\s+of|vp\s*,?\s+)legal'
+
+  - tag: law-adjacent       # regulatory / compliance / privacy / contracts / policy
+    # NOTE: 'governance' and bare 'contract' are intentionally NOT keywords — that
+    # would match eng titles like "AI Governance" or "Contract Recruiter". They are
+    # constrained below as patterns instead. 'compliance'/'regulatory'/'privacy' are
+    # broad enough to keep as keywords.
+    keywords: [compliance, regulatory, privacy, "data protection", licensing,
+               "public policy", AML, KYC, GRC, DPO, "anti-money laundering"]
+    patterns:
+      - '(corporate|data|information|board|it|risk\s*(and|&)?\s*)governance'
+      - 'governance\s+(manager|lead|analyst|specialist|officer|director|counsel)'
+      - 'contracts\b'
+      - 'contract\s+(manager|specialist|administrator|administration|analyst|lead|counsel|attorney|negotiat\w*|management|review|drafting)'
+      - 'legal\s+ops(erations)?'
+      - 'policy\s+(analyst|advisor|adviser|manager|counsel|lead|specialist)'
+      - 'risk\s+(and|&)\s+compliance'
+      - 'ethics\s+(and|&)\s+compliance'
+    exclude: []
